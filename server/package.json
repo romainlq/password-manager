@@ -1,0 +1,35 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "db:load": "knex seed:run",
+    "db:migrate": "knex migrate:latest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "@koa/router": "10.1.1",
+    "bcrypt": "5.0.1",
+    "config": "^3.3.6",
+    "dotenv": "^10.0.0",
+    "humps": "2.0.1",
+    "jsonwebtoken": "8.5.1",
+    "knex": "0.95.11",
+    "koa": "2.13.3",
+    "koa-bodyparser": "4.3.0",
+    "koa-cors": "0.0.16",
+    "koa-session": "6.2.0",
+    "lodash": "4.17.21",
+    "pg": "8.7.1",
+    "uuid": "8.3.2",
+    "yup": "0.32.11"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.13"
+  }
+}
