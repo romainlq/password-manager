@@ -6,8 +6,8 @@ const passwordSchema = yup
     id: yup.string(),
     domainName: yup.string().required().trim(),
     password: yup.string().required().min(6).max(128),
-    email: yup.string().email().trim(),
-    username: yup.string().trim(),
+    email: yup.string().nullable().trim(),
+    username: yup.string().nullable().trim(),
     userId: yup.string(),
   })
   .noUnknown();

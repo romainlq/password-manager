@@ -55,7 +55,7 @@ module.exports = {
     ctx.assert(
       isPasswordValid,
       401,
-      new ValidationError(["is invalid"], "", "email or password")
+      new ValidationError(["is invalid"], "", "username or password")
     );
 
     user = generateJWTforUser(user);
@@ -63,5 +63,6 @@ module.exports = {
     ctx.cookies.set("token", user.token);
 
     ctx.body = { user: _.omit(user, ["password"]) };
+    return ctx.login(user);
   },
 };
