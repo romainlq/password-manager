@@ -12,8 +12,20 @@ module.exports = {
     const { body } = ctx.request;
     const opts = { abortEarly: false };
     const password = await ctx.app.schemas.password.validate(body, opts);
+    password.userId = ctx.state.user.id;
     await db("passwords").insert(humps.decamelizeKeys(password));
 
     ctx.body = { password };
+  },
+
+  async put(ctx) {
+    const { body } = ctx.request;
+    console.log(body);
+  },
+
+  async delete(ctx) {
+    const { id } = ctx.params;
+    await db("passwords").where({ id }).del();
+    ctx.body = {};
   },
 };
