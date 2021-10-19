@@ -6,8 +6,6 @@ const initialState = {
     username: '',
     authenticated: false,
     loading: false,
-    error: '',
-    token: '',
 };
 
 export const logIn = createAsyncThunk('user/logIn', async (userInfos) => {
@@ -29,7 +27,6 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         logOut: (state) => {
-            state.token = '';
             state.authenticated = false;
             state.username = '';
         },
@@ -38,34 +35,26 @@ export const userSlice = createSlice({
         builder
             .addCase(logIn.pending, (state) => {
                 state.loading = true;
-                state.token = '';
                 state.authenticated = false;
             })
             .addCase(logIn.fulfilled, (state, { payload }) => {
                 const { user } = payload;
                 state.loading = false;
                 state.authenticated = true;
-                state.token = user.token;
                 state.username = user.username;
                 localStorage.setItem('token', user.token);
             })
             .addCase(logIn.rejected, (state, action) => {
                 state.loading = false;
-                state.error = 'error'; // TODO: handle error properly
             })
             .addCase(fetchUser.pending, (state) => {
                 state.loading = true;
             })
             .addCase(fetchUser.fulfilled, (state, { payload }) => {
-                // const { user } = payload;
                 state.loading = false;
-                // state.authenticated = true;
-                // state.token = user.token;
-                // state.username = user.username;
             })
             .addCase(fetchUser.rejected, (state, action) => {
                 state.loading = false;
-                state.error = 'error'; // TODO: handle error properly
             });
     },
 });

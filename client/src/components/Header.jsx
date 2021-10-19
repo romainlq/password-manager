@@ -2,6 +2,7 @@ import { Flex, HStack, Button, Text, Icon } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { logOut } from '@/modules/user/UserSlice';
+import { resetPasswords } from '@/modules/password/PasswordSlice';
 
 
 const Header = () => {
@@ -11,6 +12,7 @@ const Header = () => {
 
     const onLogOut = () => {
         dispatch(logOut());
+        dispatch(resetPasswords());
     }
 
     return (
