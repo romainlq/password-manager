@@ -17,54 +17,55 @@ import {
 import PasswordInput from './PasswordInput';
 import zxcvbn from 'zxcvbn';
 import { useDispatch } from 'react-redux';
-
+import { createPassword } from '@/modules/password/PasswordSlice';
 
 const AddPasswordModal = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
+    const [domainName, setDomainName] = useState('');
     const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
 
     const renderPasswordScore = () => {
         if (password.length === 0) {
             return;
         }
         const { score } = zxcvbn(password);
-        console.log(zxcvbn(password));
-        console.log(score)
         let progress = 0;
         let color = 'red';
-        switch(score) {
+        switch (score) {
             case 0:
             default:
                 color = 'red';
-                progress=20;
+                progress = 20;
                 break;
             case 1:
                 color = 'red';
-                progress=40;
+                progress = 40;
                 break;
             case 2:
                 color = 'yellow';
-                progress=60;
+                progress = 60;
                 break;
             case 3:
                 color = 'green';
-                progress=80;
+                progress = 80;
                 break;
             case 4:
                 color = 'green';
-                progress=100;
+                progress = 100;
                 break;
-            
         }
 
-        return (<Progress marginY="4" borderRadius="8" value={progress} colorScheme={color} />)
-
-    }
-
-    const onClickGeneratePassword = () => {
-        // const newPassword = generatePassword({ minScore: 4});
-        // setPassword(newPassword);
-    }
+        return (
+            <Progress
+                marginY="4"
+                borderRadius="8"
+                value={progress}
+                colorScheme={color}
+            />
+        );
+    };
 
     const onClickCreate = () => {
         const newPassword = {
@@ -72,11 +73,11 @@ const AddPasswordModal = ({ isOpen, onClose }) => {
             username,
             email,
             password,
-        }
-        dispatch(createNewPassword(newPassword));
-        onClose(); //
-    }
-
+        };
+        dispatch(createPassword(newPassword));
+        setPassword('');
+        onClose();
+    };
 
     const disableCreateButton = false; // TODO: configure disable
 
@@ -90,25 +91,46 @@ const AddPasswordModal = ({ isOpen, onClose }) => {
                 <ModalBody>
                     <FormControl id="domainName" isRequired>
                         <FormLabel>Domain name</FormLabel>
-                        <Input marginY="2" />
+                        <Input
+                            marginY="2"
+                            onChange={(e) => setDomainName(e.target.value)}
+                        />
                     </FormControl>
                     <FormControl id="email">
                         <FormLabel>Email address</FormLabel>
-                        <Input marginY="2" type="email" />
+                        <Input
+                            marginY="2"
+                            type="email"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
                     </FormControl>
                     <FormControl id="username">
                         <FormLabel>Username</FormLabel>
-                        <Input marginY="2" />
+                        <Input
+                            marginY="2"
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
                     </FormControl>
                     <FormControl id="password" isRequired>
                         <FormLabel>Password</FormLabel>
-                        <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <PasswordInput
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
                         {renderPasswordScore()}
                     </FormControl>
                 </ModalBody>
                 <ModalFooter>
-                    <Button marginRight="3" variant="ghost" onClick={onClose}>Close</Button>
-                    <Button disabled={disableCreateButton} colorScheme="green" onClick={onClose}>Create</Button>
+                    <Button marginRight="3" variant="ghost" onClick={onClose}>
+                        Close
+                    </Button>
+                    <Button
+                        disabled={disableCreateButton}
+                        colorScheme="green"
+                        onClick={onClickCreate}
+                    >
+                        Create
+                    </Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>

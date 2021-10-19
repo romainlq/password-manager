@@ -1,7 +1,7 @@
 import API from '@/lib/request';
 
 const PASSWORDS_URLS = {
-    BASE: '/passwords',
+    BASE: `/passwords`,
 };
 
 export const postPassword = (payload) => {
@@ -12,7 +12,7 @@ export const putPassword = (payload) => {
     return API.put(PASSWORDS_URLS.BASE, payload);
 };
 export const getPasswords = () => {
-    return API.get(PASSWORDS_URLS.BASE, payload);
+    return API.get(PASSWORDS_URLS.BASE);
 };
 export const deletePassword = (payload) => {
     return API.put(PASSWORDS_URLS.BASE, payload);

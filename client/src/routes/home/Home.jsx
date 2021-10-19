@@ -22,7 +22,7 @@ import Header from '@/components/Header';
 import PasswordInput from '@/components/PasswordInput';
 import AddPasswordModal from '@/components/AddPasswordModal';
 import AlertDeletePassword from '@/components/AlertDeletePassword';
-import { fetchUser } from '@/modules/user/UserSlice';
+import { fetchPasswords } from '@/modules/password/PasswordSlice';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const Home = () => {
         if (!authenticated) {
             setLocation(PATHS.LOGIN, { replace: true });
         } else {
-            dispatch(fetchUser());
+            dispatch(fetchPasswords());
         }
     }, [authenticated]);
 

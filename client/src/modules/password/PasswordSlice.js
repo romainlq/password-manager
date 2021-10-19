@@ -8,26 +8,7 @@ import {
 } from './PasswordApi';
 
 const initialState = {
-    passwords: [
-        {
-            id: '1',
-            domainName: 'facebook.com',
-            email: 'anakin.skywalker@facebook.com',
-            password: 'anakinfacebook123',
-        },
-        {
-            id: '2',
-            domainName: 'twitter.com',
-            username: 'anakin.skywalker',
-            password: 'anakintwitter123',
-        },
-        {
-            id: '3',
-            domainName: 'instagram.com',
-            username: 'askywalker',
-            password: 'anakininstagram',
-        },
-    ],
+    passwords: [],
     loading: false,
 };
 
@@ -39,8 +20,8 @@ export const createPassword = createAsyncThunk(
     }
 );
 
-export const listPasswords = createAsyncThunk(
-    'password/listPasswords',
+export const fetchPasswords = createAsyncThunk(
+    'password/fetchPasswords',
     async () => {
         const response = await getPasswords();
         return response.data;
@@ -73,10 +54,22 @@ export const passwordSlice = createSlice({
             })
             .addCase(createPassword.fulfilled, (state, { payload }) => {
                 const { password } = payload;
+                console.log(password);
                 state.loading = false;
                 state.passwords = [...state.passwords, password];
             })
             .addCase(createPassword.rejected, (state) => {
+                state.loading = false;
+            })
+            .addCase(fetchPasswords.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchPasswords.fulfilled, (state, { payload }) => {
+                const { passwords } = payload;
+                state.loading = false;
+                state.passwords = [...passwords];
+            })
+            .addCase(fetchPasswords.rejected, (state) => {
                 state.loading = false;
             });
     },

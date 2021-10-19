@@ -16,13 +16,11 @@ export const logIn = createAsyncThunk('user/logIn', async (userInfos) => {
         password: userInfos.password,
     };
     const response = await postLogIn(payload);
-    // console.log(response.data);
     return response.data;
 });
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
     const response = await getUser();
-    console.log(response);
     return response.data;
 });
 
@@ -59,7 +57,6 @@ export const userSlice = createSlice({
                 state.loading = true;
             })
             .addCase(fetchUser.fulfilled, (state, { payload }) => {
-                console.log(payload);
                 // const { user } = payload;
                 state.loading = false;
                 // state.authenticated = true;
