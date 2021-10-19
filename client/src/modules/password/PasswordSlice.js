@@ -53,10 +53,7 @@ export const passwordSlice = createSlice({
                 state.loading = true;
             })
             .addCase(createPassword.fulfilled, (state, { payload }) => {
-                const { password } = payload;
-                console.log(password);
                 state.loading = false;
-                state.passwords = [...state.passwords, password];
             })
             .addCase(createPassword.rejected, (state) => {
                 state.loading = false;
@@ -70,6 +67,15 @@ export const passwordSlice = createSlice({
                 state.passwords = [...passwords];
             })
             .addCase(fetchPasswords.rejected, (state) => {
+                state.loading = false;
+            })
+            .addCase(removePassword.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(removePassword.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(removePassword.rejected, (state) => {
                 state.loading = false;
             });
     },

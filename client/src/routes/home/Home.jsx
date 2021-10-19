@@ -22,7 +22,10 @@ import Header from '@/components/Header';
 import PasswordInput from '@/components/PasswordInput';
 import AddPasswordModal from '@/components/AddPasswordModal';
 import AlertDeletePassword from '@/components/AlertDeletePassword';
-import { fetchPasswords } from '@/modules/password/PasswordSlice';
+import {
+    fetchPasswords,
+    removePassword,
+} from '@/modules/password/PasswordSlice';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -47,40 +50,44 @@ const Home = () => {
     const onPressDelete = (idToDelete) => {
         setPasswordToDeleteId(idToDelete);
         setShowDeleteModal(true);
-    }
+    };
 
-    const onDeletePassword = () => {
-        console.log('iciiii' , passwordToDeleteId);
-        dispatch(deletePassword(passwordToDeleteId));
+    const onDeletePassword = async () => {
+        await dispatch(removePassword(passwordToDeleteId));
+        return await dispatch(fetchPasswords());
     };
 
     const renderRow = (password) => {
         return (
             <>
-             <AlertDeletePassword
-                onSubmit={onDeletePassword}
-                isOpen={showDeleteModal}
-                onClose={() => setShowDeleteModal(false)}
-            />
-            <Tr key={password.id}>
-                            <Td>
-                                <Text>{password.domainName}</Text>
-                            </Td>
-                            <Td>{password.email || password.username}</Td>
-                            <Td>
-                                <PasswordInput value={password.password} />
-                            </Td>
-                            <Td>
-                                <HStack>
-                                    <Button>Edit</Button>
-                                    <Button colorScheme="red" onClick={() => onPressDelete(password.id)}>Delete</Button>
-                                </HStack>
-                            </Td>
-                        </Tr>
-                        </>
-        )
-
-    }
+                <AlertDeletePassword
+                    onSubmit={onDeletePassword}
+                    isOpen={showDeleteModal}
+                    onClose={() => setShowDeleteModal(false)}
+                />
+                <Tr key={password.id}>
+                    <Td>
+                        <Text>{password.domainName}</Text>
+                    </Td>
+                    <Td>{password.email || password.username}</Td>
+                    <Td>
+                        <PasswordInput value={password.password} />
+                    </Td>
+                    <Td>
+                        <HStack>
+                            <Button>Edit</Button>
+                            <Button
+                                colorScheme="red"
+                                onClick={() => onPressDelete(password.id)}
+                            >
+                                Delete
+                            </Button>
+                        </HStack>
+                    </Td>
+                </Tr>
+            </>
+        );
+    };
 
     return (
         <Flex flexDirection="column">

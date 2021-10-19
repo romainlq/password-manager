@@ -28,6 +28,8 @@ instance.interceptors.request.use((config) => {
 const API = {
     get: instance.get,
     post: instance.post,
+    delete: instance.delete,
+    put: instance.put,
 };
 
 export default API;

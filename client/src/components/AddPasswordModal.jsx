@@ -11,13 +11,13 @@ import {
     ModalHeader,
     ModalOverlay,
     Input,
-    HStack,
+    FormHelperText,
     Progress,
 } from '@chakra-ui/react';
 import PasswordInput from './PasswordInput';
 import zxcvbn from 'zxcvbn';
 import { useDispatch } from 'react-redux';
-import { createPassword } from '@/modules/password/PasswordSlice';
+import { createPassword, fetchPasswords } from '@/modules/password/PasswordSlice';
 
 const AddPasswordModal = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
@@ -67,19 +67,23 @@ const AddPasswordModal = ({ isOpen, onClose }) => {
         );
     };
 
-    const onClickCreate = () => {
+    const onClickCreate = async () => {
         const newPassword = {
             domainName,
             username,
             email,
             password,
         };
-        dispatch(createPassword(newPassword));
+        await dispatch(createPassword(newPassword));
         setPassword('');
         onClose();
+        return await dispatch(fetchPasswords());
     };
 
-    const disableCreateButton = false; // TODO: configure disable
+    const enableCreateButton =
+        domainName.length > 0 &&
+        password.length >= 6 &&
+        (username.length > 0 || email.length > 0);
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -117,6 +121,9 @@ const AddPasswordModal = ({ isOpen, onClose }) => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <FormHelperText>
+                            Password must contains at least 6 characters
+                        </FormHelperText>
                         {renderPasswordScore()}
                     </FormControl>
                 </ModalBody>
@@ -125,7 +132,7 @@ const AddPasswordModal = ({ isOpen, onClose }) => {
                         Close
                     </Button>
                     <Button
-                        disabled={disableCreateButton}
+                        disabled={!enableCreateButton}
                         colorScheme="green"
                         onClick={onClickCreate}
                     >

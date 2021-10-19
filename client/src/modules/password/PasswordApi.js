@@ -14,6 +14,6 @@ export const putPassword = (payload) => {
 export const getPasswords = () => {
     return API.get(PASSWORDS_URLS.BASE);
 };
-export const deletePassword = (payload) => {
-    return API.put(PASSWORDS_URLS.BASE, payload);
+export const deletePassword = (passwordId) => {
+    return API.delete(`${PASSWORDS_URLS.BASE}/${passwordId}`);
 };

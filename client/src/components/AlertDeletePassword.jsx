@@ -7,23 +7,16 @@ import {
     AlertDialogOverlay,
     Button,
 } from '@chakra-ui/react';
-import { useRef } from 'react';
 
 const AlertDeletePassword = ({ isOpen, onClose, onSubmit }) => {
-    // const cancelRef = useRef();
-
     const onSubmitClick = () => {
         onSubmit();
         onClose();
     };
 
     return (
-        <AlertDialog
-            isOpen={isOpen}
-            onClose={onClose}
-            // leastDestructiveRef={cancelRef}
-        >
-            <AlertDialogOverlay>
+        <AlertDialog isOpen={isOpen} onClose={onClose}>
+            <AlertDialogOverlay backgroundColor="var(--chakra-colors-blackAlpha-200)">
                 <AlertDialogContent>
                     <AlertDialogHeader>Delete password</AlertDialogHeader>
 
@@ -32,11 +25,7 @@ const AlertDeletePassword = ({ isOpen, onClose, onSubmit }) => {
                     </AlertDialogBody>
 
                     <AlertDialogFooter>
-                        <Button
-                            mr="4"
-                            // ref={cancelRef}
-                            onClick={onClose}
-                        >
+                        <Button mr="4" onClick={onClose}>
                             Cancel
                         </Button>
                         <Button colorScheme="red" onClick={onSubmitClick}>
