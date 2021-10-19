@@ -9,6 +9,8 @@ const { ValidationError } = require("../lib/errors");
 
 module.exports = {
   async get(ctx) {
+    console.log("dans le get");
+    console.log(ctx.state.user);
     const user = generateJWTforUser(ctx.state.user);
     ctx.body = { user };
   },
@@ -58,6 +60,7 @@ module.exports = {
 
     user = generateJWTforUser(user);
     ctx.status = 200;
+    ctx.cookies.set("token", user.token);
 
     ctx.body = { user: _.omit(user, ["password"]) };
   },

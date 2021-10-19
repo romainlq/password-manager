@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-console.log(API_URL);
 const CONFIG = {
     baseURL: API_URL,
     timeout: 10000,
@@ -13,18 +12,18 @@ const CONFIG = {
 
 const instance = axios.create({ ...CONFIG });
 
-// instance.interceptors.request.use((config) => {
-//     const cookies = new Cookies();
-//     const jwt = cookies.get('header.payload'); // TODO: ???
+instance.interceptors.request.use((config) => {
+    const cookies = new Cookies();
+    const jwt = localStorage.getItem('token'); // TODO: ???
 
-//     return {
-//         ...config,
-//         withCredentials: true,
-//         headers: {
-//             Authorization: '',
-//         },
-//     };
-// });
+    return {
+        ...config,
+        withCredentials: true,
+        headers: {
+            Authorization: `Token ${jwt}`,
+        },
+    };
+});
 
 const API = {
     get: instance.get,

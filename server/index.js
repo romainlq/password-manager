@@ -1,24 +1,22 @@
 const Koa = require("koa");
 const session = require("koa-session");
 const cors = require("@koa/cors");
-
-const Router = require("@koa/router");
-
-const app = new Koa();
-app.keys = ["init key"];
-
-require("./src/schemas")(app);
+const koaJwt = require("koa-jwt");
 const bodyParser = require("koa-bodyparser");
 const routes = require("./src/routes");
+const passport = require("koa-passport");
+const app = new Koa();
+const PORT = 3001;
 
-app.use(
-  bodyParser({
-    enableTypes: ["json"],
-  })
-);
+// const jwt = require("./src/middleware/jwt-middleware");
 
+// app.use(koaJwt({ secret: "mySecret", passthrough: true }));
+
+require("./src/schemas")(app);
+
+// Cors
 const corsOptions = {
-  origin: "*",
+  origin: "http://localhost:3000",
   exposeHeaders: ["Authorization"],
   credentials: true,
   allowMethods: ["GET", "PUT", "POST", "DELETE"],
@@ -28,13 +26,27 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// Sessions
+app.keys = ["init key"];
 app.use(session(app));
 
+// Bodyparser
+app.use(
+  bodyParser({
+    enableTypes: ["json"],
+  })
+);
+
+// Authentication
+require("./src/auth");
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Routes
 app.use(routes.routes());
 app.use(routes.allowedMethods());
 
-const PORT = 3001;
-
+// Server
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });

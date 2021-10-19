@@ -9,10 +9,10 @@ const options = {
     max: 4,
   },
   migrations: {
-    directory: "src/migrations",
+    directory: "src/db/migrations",
   },
   seeds: {
-    directory: "src/seeds",
+    directory: "src/db/seeds",
   },
 };
 

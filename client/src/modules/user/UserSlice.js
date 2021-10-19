@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { postLogIn } from './UserApi';
+import { postLogIn, getUser } from './UserApi';
 
 const initialState = {
     username: '',
@@ -16,6 +16,13 @@ export const logIn = createAsyncThunk('user/logIn', async (userInfos) => {
         password: userInfos.password,
     };
     const response = await postLogIn(payload);
+    // console.log(response.data);
+    return response.data;
+});
+
+export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
+    const response = await getUser();
+    console.log(response);
     return response.data;
 });
 
@@ -42,10 +49,26 @@ export const userSlice = createSlice({
                 state.authenticated = true;
                 state.token = user.token;
                 state.username = user.username;
+                localStorage.setItem('token', user.token);
             })
             .addCase(logIn.rejected, (state, action) => {
                 state.loading = false;
-                error: 'error'; // TODO: handle error properly
+                state.error = 'error'; // TODO: handle error properly
+            })
+            .addCase(fetchUser.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(fetchUser.fulfilled, (state, { payload }) => {
+                console.log(payload);
+                // const { user } = payload;
+                state.loading = false;
+                // state.authenticated = true;
+                // state.token = user.token;
+                // state.username = user.username;
+            })
+            .addCase(fetchUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = 'error'; // TODO: handle error properly
             });
     },
 });
