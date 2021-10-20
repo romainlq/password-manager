@@ -13,8 +13,22 @@ const PORT = 3001;
 require("./src/schemas")(app);
 
 // Cors
+
+const whitelist = [
+  "https://password-manager-romainlq1.vercel.app",
+  "http://localhost:3000",
+];
+
+const checkOriginAgainstWhitelist = (ctx) => {
+  const requestOrigin = ctx.accept.headers.origin;
+  if (!whitelist.includes(requestOrigin)) {
+    return ctx.throw(`🙈 ${requestOrigin} is not a valid origin`);
+  }
+  return requestOrigin;
+};
+
 const corsOptions = {
-  origin: "https://password-manager-romainlq1.vercel.app",
+  origin: checkOriginAgainstWhitelist,
   exposeHeaders: ["Authorization"],
   credentials: true,
   allowMethods: ["GET", "PUT", "POST", "DELETE"],
@@ -22,7 +36,7 @@ const corsOptions = {
   keepHeadersOnError: true,
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Sessions
 app.keys = ["init key"];
