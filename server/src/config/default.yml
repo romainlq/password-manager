@@ -1,0 +1,2 @@
+db:
+  client: DB_CONNECTION
