@@ -27,4 +27,10 @@ Git clone the repository
 - postgresql database
 
 
+### How to log in
+You can use 2 accounts:
 
+|  Account id  | Username | Password   |
+|--------------|----------|------------|
+|       1      | `anakin` | `skywalker`|
+|       2      | `obiwan` | `kenobi`   |
