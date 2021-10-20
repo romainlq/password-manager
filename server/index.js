@@ -4,7 +4,10 @@ const cors = require("@koa/cors");
 const bodyParser = require("koa-bodyparser");
 const routes = require("./src/routes");
 const passport = require("koa-passport");
+const logger = require("koa-logger");
+
 const app = new Koa();
+app.use(logger());
 const PORT = 3001;
 
 require("./src/schemas")(app);
