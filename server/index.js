@@ -16,7 +16,7 @@ require("./src/schemas")(app);
 
 // Cors
 const corsOptions = {
-  origin: "https://password-manager-koa.herokuapp.com/",
+  origin: "https://password-manager-romainlq1.vercel.app",
   exposeHeaders: ["Authorization"],
   credentials: true,
   allowMethods: ["GET", "PUT", "POST", "DELETE"],
