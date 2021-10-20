@@ -8,7 +8,7 @@ const logger = require("koa-logger");
 
 const app = new Koa();
 app.use(logger());
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 require("./src/schemas")(app);
 
