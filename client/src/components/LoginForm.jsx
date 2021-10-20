@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
     Box,
     Button,
@@ -7,9 +9,9 @@ import {
     Text,
 } from '@chakra-ui/react';
 
-import { useState } from 'react';
 
 const LoginForm = ({ submitLogin }) => {
+    const error =  useSelector(state => state.user.error);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -38,6 +40,7 @@ const LoginForm = ({ submitLogin }) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                {error && <Text color="red">{error}</Text>}
                 <Center>
                     <Button
                         marginX="auto"

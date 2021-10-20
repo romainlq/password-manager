@@ -59,39 +59,36 @@ const Home = () => {
 
     const renderRow = (password) => {
         return (
-            <>
-                <AlertDeletePassword
-                    onSubmit={onDeletePassword}
-                    isOpen={showDeleteModal}
-                    onClose={() => setShowDeleteModal(false)}
-                />
-                <Tr key={password.id}>
-                    <Td>
-                        <Text>{password.domainName}</Text>
-                    </Td>
-                    <Td>{password.email || password.username}</Td>
-                    <Td>
-                        <PasswordInput value={password.password} />
-                    </Td>
-                    <Td>
-                        <HStack>
-                            <Button>Edit</Button>
-                            <Button
-                                colorScheme="red"
-                                onClick={() => onPressDelete(password.id)}
-                            >
-                                Delete
-                            </Button>
-                        </HStack>
-                    </Td>
-                </Tr>
-            </>
+            <Tr key={password.id}>
+                <Td>
+                    <Text>{password.domainName}</Text>
+                </Td>
+                <Td>{password.email || password.username}</Td>
+                <Td>
+                    <PasswordInput value={password.password} />
+                </Td>
+                <Td>
+                    <HStack>
+                        <Button
+                            colorScheme="red"
+                            onClick={() => onPressDelete(password.id)}
+                        >
+                            Delete
+                        </Button>
+                    </HStack>
+                </Td>
+            </Tr>
         );
     };
 
     return (
         <Flex flexDirection="column">
             <AddPasswordModal isOpen={isOpen} onClose={onClose} />
+            <AlertDeletePassword
+                onSubmit={onDeletePassword}
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+            />
             <Header />
             <HStack padding={6}>
                 <Button

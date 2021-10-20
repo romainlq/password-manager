@@ -36,6 +36,7 @@ export const userSlice = createSlice({
             .addCase(logIn.pending, (state) => {
                 state.loading = true;
                 state.authenticated = false;
+                state.error = '';
             })
             .addCase(logIn.fulfilled, (state, { payload }) => {
                 const { user } = payload;
@@ -44,8 +45,10 @@ export const userSlice = createSlice({
                 state.username = user.username;
                 localStorage.setItem('token', user.token);
             })
-            .addCase(logIn.rejected, (state, action) => {
+            .addCase(logIn.rejected, (state) => {
                 state.loading = false;
+                state.error =
+                    'An error has occured. Check that you used the correct username and password.';
             })
             .addCase(fetchUser.pending, (state) => {
                 state.loading = true;
