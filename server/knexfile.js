@@ -18,6 +18,7 @@ const options = {
 
 const configs = {
   development: Object.assign({}, options),
+  production: Object.assign({}, options),
 };
 Object.assign(configs, configs[process.env.NODE_ENV]);
 
