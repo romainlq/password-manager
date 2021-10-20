@@ -1,10 +1,10 @@
-import { Flex } from "@chakra-ui/react"
+import { Flex, Text } from "@chakra-ui/react"
 
 
 const NotFound = () => {
     return (
-        <Flex>
-            <h1>NOT FOUND</h1>
+        <Flex width="100%" height="100%" alignItems="center" justifyContent="center">
+            <Text fontSize="3xl" fontWeight="bold">NOT FOUND</Text>
         </Flex>
     )
 }
