@@ -1,7 +1,7 @@
 require("./src/lib/bootstrap");
 const config = require("config");
 const dotenv = require("dotenv");
-dotenv.load();
+dotenv.config();
 
 const options = {
   client: "pg",
