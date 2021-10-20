@@ -14,13 +14,13 @@ const instance = axios.create({ ...CONFIG });
 
 instance.interceptors.request.use((config) => {
     const cookies = new Cookies();
-    const jwt = localStorage.getItem('token'); // TODO: ???
+    const token = cookies.get('koa.sess');
 
     return {
         ...config,
         withCredentials: true,
         headers: {
-            Authorization: `Token ${jwt}`,
+            Authorization: `Token ${token}`,
         },
     };
 });

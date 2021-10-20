@@ -14,7 +14,7 @@ require("./src/schemas")(app);
 
 // Cors
 const corsOptions = {
-  origin: "password-manager-romainlq1.vercel.app",
+  origin: "https://password-manager-romainlq1.vercel.app",
   exposeHeaders: ["Authorization"],
   credentials: true,
   allowMethods: ["GET", "PUT", "POST", "DELETE"],
