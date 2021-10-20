@@ -7,7 +7,9 @@ export default defineConfig({
     define: {
         ...(process.env.NODE_ENV !== 'production'
             ? { API_URL: `'http://localhost:3001/api'` }
-            : { API_URL: `'https://password-manager-koa.herokuapp.com/'` }),
+            : {
+                  API_URL: `'https://password-manager-koa.herokuapp.com/api'`,
+              }),
     },
     plugins: [react()],
     resolve: {

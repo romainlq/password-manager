@@ -1,7 +1,4 @@
 require("./src/lib/bootstrap");
-const config = require("config");
-const dotenv = require("dotenv");
-dotenv.config();
 
 const options = {
   client: "pg",
@@ -19,12 +16,11 @@ const options = {
   },
 };
 
-const dbConnection = config.has("db.connection") && config.get("db.connection");
-
 const configs = {
   development: Object.assign({}, options),
   production: Object.assign({}, options),
 };
+
 Object.assign(configs, configs[process.env.NODE_ENV]);
 
 module.exports = configs;

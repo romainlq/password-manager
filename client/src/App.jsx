@@ -15,7 +15,6 @@ const App = () => {
         </>
         <Route component={NotFound} />
       </Switch>
-
     </AppLayout>
   )
 }

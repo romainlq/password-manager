@@ -32,11 +32,7 @@ const corsOptions = {
   exposeHeaders: ["Authorization"],
   credentials: true,
   allowMethods: ["GET", "PUT", "POST", "DELETE"],
-  allowHeaders: [
-    "Authorization",
-    "Content-Type",
-    "Access-Control-Allow-Headers",
-  ],
+  allowHeaders: ["Authorization", "Content-Type"],
   keepHeadersOnError: true,
 };
 
@@ -44,20 +40,7 @@ app.use(cors(corsOptions));
 
 // Sessions
 app.keys = ["init key"];
-const isProd = process.env.NODE_ENV === "production" ? true : false;
-const CONFIG_SESSION = {
-  key: "koa.sess",
-  maxAge: 86400000,
-  autoCommit: true,
-  overwrite: true,
-  httpOnly: false,
-  signed: true,
-  rolling: false,
-  renew: false,
-  secure: false,
-  sameSite: "None",
-};
-app.use(session({ sameSite: "None" }, app));
+app.use(session(app));
 
 // Bodyparser
 app.use(
