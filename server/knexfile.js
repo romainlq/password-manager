@@ -23,9 +23,7 @@ const dbConnection = config.has("db.connection") && config.get("db.connection");
 
 const configs = {
   development: Object.assign({}, options),
-  production: Object.assign({}, options, {
-    connection: dbConnection,
-  }),
+  production: Object.assign({}, options),
 };
 Object.assign(configs, configs[process.env.NODE_ENV]);
 
