@@ -22,7 +22,7 @@ const corsOptions = {
   keepHeadersOnError: true,
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Sessions
 app.keys = ["init key"];
