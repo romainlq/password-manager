@@ -16,7 +16,7 @@ require("./src/schemas")(app);
 
 // Cors
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://password-manager-koa.herokuapp.com/",
   exposeHeaders: ["Authorization"],
   credentials: true,
   allowMethods: ["GET", "PUT", "POST", "DELETE"],
