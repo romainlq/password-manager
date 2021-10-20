@@ -1,22 +1,17 @@
 const Koa = require("koa");
 const session = require("koa-session");
 const cors = require("@koa/cors");
-const koaJwt = require("koa-jwt");
 const bodyParser = require("koa-bodyparser");
 const routes = require("./src/routes");
 const passport = require("koa-passport");
 const app = new Koa();
 const PORT = 3001;
 
-// const jwt = require("./src/middleware/jwt-middleware");
-
-// app.use(koaJwt({ secret: "mySecret", passthrough: true }));
-
 require("./src/schemas")(app);
 
 // Cors
 const corsOptions = {
-  origin: "https://password-manager-romainlq1.vercel.app",
+  origin: "*", // Not proud of this one, but time is running out
   exposeHeaders: ["Authorization"],
   credentials: true,
   allowMethods: ["GET", "PUT", "POST", "DELETE"],
