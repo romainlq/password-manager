@@ -17,7 +17,10 @@ import {
 import PasswordInput from './PasswordInput';
 import zxcvbn from 'zxcvbn';
 import { useDispatch } from 'react-redux';
-import { createPassword, fetchPasswords } from '@/modules/password/PasswordSlice';
+import {
+    createPassword,
+    fetchPasswords,
+} from '@/modules/password/PasswordSlice';
 
 const AddPasswordModal = ({ isOpen, onClose }) => {
     const dispatch = useDispatch();
@@ -80,6 +83,19 @@ const AddPasswordModal = ({ isOpen, onClose }) => {
         return await dispatch(fetchPasswords());
     };
 
+    const generatePassword = () => {
+        const CHARS =
+            '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const PASSWORD_LENGTH = 12;
+        let newPassword = '';
+
+        for (var i = 0; i <= PASSWORD_LENGTH; i++) {
+            var randomNumber = Math.floor(Math.random() * CHARS.length);
+            newPassword += CHARS.substring(randomNumber, randomNumber + 1);
+        }
+        setPassword(newPassword);
+    };
+
     const enableCreateButton =
         domainName.length > 0 &&
         password.length >= 6 &&
@@ -124,6 +140,13 @@ const AddPasswordModal = ({ isOpen, onClose }) => {
                         <FormHelperText>
                             Password must contains at least 6 characters
                         </FormHelperText>
+                        <Button
+                            marginY={2}
+                            onClick={generatePassword}
+                            colorScheme="teal"
+                        >
+                            Generate
+                        </Button>
                         {renderPasswordScore()}
                     </FormControl>
                 </ModalBody>
